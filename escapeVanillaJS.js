@@ -51,14 +51,13 @@ function findMostRecentBook(books) {
 
 function findIntersection(setA, setB) {
   // 🪲 Bug: Incorrect logic
-  return new Set([...setA]).filter((element) =>setB.has(element))
-
+  return [...setA].filter((element) => setB.has(element));
 }
 
 async function navigateLabyrinth(directions) {
   for (let direction of directions) {
     // 🪲 Bug: No delay
-  new Promise((resolve) => setTimeout(resolve, 1000)); //Await added.
+    await new Promise((resolve) => setTimeout(resolve, 1000)); //Await added.
     console.log(`Navigating: ${direction.step}`);
   }
   return "Congratulations! You've mastered the essentials of Vanilla JavaScript. Welcome to the world of React, where you'll build powerful and dynamic web applications. Let's dive in!";
