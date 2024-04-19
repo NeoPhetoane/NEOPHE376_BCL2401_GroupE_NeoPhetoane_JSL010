@@ -27,21 +27,18 @@ document.addEventListener("DOMContentLoaded", () => {
     ).join(", ")}`;
   });
 
-  // 🪲 Bug: Asynchronous function ?
+  // 🪲 Bug: Asynchronous function ? Asynchronous keyword added along with await to allow the promises to be fulfilled first before the async function is excecuted.
   document.getElementById("solveRoom3").addEventListener("click", async () => {
-    fetch("directions.json")
-      .then((response) => response.json())
-      .then((directions) => {
-        navigateLabyrinth(directions).then((message) => {
-          // 🪲 Bug: Incorrect method
-          document.getElementById("room3Result").textContent = message;
-        });
-      });
+    const response = await fetch("directions.json");
+    const directions = await response.json();
+    const message = await navigateLabyrinth(directions);
+    // 🪲 Bug: Incorrect method. innerHTML is not utilised, all that needs to be done is display content without any HTML tags. They already exist and are fetched by ID.
+    document.getElementById("room3Result").textContent = message;
   });
 });
 
 function findMostRecentBook(books) {
-  // 🪲 Bug: Logic error
+  // 🪲 Bug: Logic error //Arrow returned earliest publisheed book instead of latest.
   return books.reduce((mostRecent, book) =>
     new Date(book.published) > new Date(mostRecent.published)
       ? book
@@ -51,7 +48,7 @@ function findMostRecentBook(books) {
 
 function findIntersection(setA, setB) {
   // 🪲 Bug: Incorrect logic
-  return [...setA].filter((element) => setB.has(element));
+  return [...setA].filter((element) => setB.has(element)); //Correct logic: what is returned is setA spread out then filtered for similarities with setB, then has check for the presence of A concepts in B.
 }
 
 async function navigateLabyrinth(directions) {
