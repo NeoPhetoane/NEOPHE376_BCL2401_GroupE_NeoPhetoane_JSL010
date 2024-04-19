@@ -29,11 +29,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 🪲 Bug: Asynchronous function ? Asynchronous keyword added along with await to allow the promises to be fulfilled first before the async function is excecuted.
   document.getElementById("solveRoom3").addEventListener("click", async () => {
-    const response = await fetch("directions.json");
-    const directions = await response.json();
-    const message = await navigateLabyrinth(directions);
-    // 🪲 Bug: Incorrect method. innerHTML is not utilised, all that needs to be done is display content without any HTML tags. They already exist and are fetched by ID.
-    document.getElementById("room3Result").textContent = message;
+    try {
+      const response = await fetch("directions.json");
+      const directions = await response.json();
+      const message = await navigateLabyrinth(directions);
+      // 🪲 Bug: Incorrect method. innerHTML is not utilised, all that needs to be done is display content without any HTML tags. They already exist and are fetched by ID.
+      document.getElementById("room3Result").textContent = message;
+    } catch (err) {
+      console.log(err); //To show in the console if there is an error in the execution of the code.
+    }
   });
 });
 
